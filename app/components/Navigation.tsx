@@ -4,12 +4,14 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Menu, X, ShoppingCart, User, Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useCart } from '../context/CartContext'
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
   const router = useRouter()
+  const { totalItems } = useCart()
   const closeNav = () => setIsOpen(false)
 
   const handleSearch = (e: React.FormEvent) => {
@@ -95,9 +97,13 @@ export function Navigation() {
               <User className="w-4 h-4" />
               Sign In
             </Link>
-            <Link href="/contact" className="flex items-center gap-2 px-4 py-2.5 text-sm bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors font-medium">
+            <Link href="/cart" className="relative p-2 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors" aria-label="Cart">
               <ShoppingCart className="w-4 h-4" />
-              Shop Now
+              {totalItems > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-accent text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
             </Link>
           </div>
 
@@ -152,9 +158,9 @@ export function Navigation() {
                   <User className="w-4 h-4" />
                   Sign In
                 </Link>
-                <Link href="/shop" onClick={closeNav} className="w-full px-4 py-3 text-sm bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors font-medium min-h-[44px] flex items-center gap-2 justify-center">
+                <Link href="/cart" onClick={closeNav} className="w-full px-4 py-3 text-sm bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors font-medium min-h-[44px] flex items-center gap-2 justify-center">
                   <ShoppingCart className="w-4 h-4" />
-                  Shop Now
+                  Cart {totalItems > 0 && `(${totalItems})`}
                 </Link>
               </div>
             </div>
