@@ -5,30 +5,30 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="w-full bg-green-800 text-green-200 border-t border-green-700">
+    <footer className="w-full bg-slate-900 text-slate-400 border-t border-slate-800">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8 mb-12 sm:mb-16">
           {/* Brand */}
           <div className="col-span-1 sm:col-span-1 space-y-4">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center font-bold text-sm">
-                🌿
+                🛍️
               </div>
-              <span className="font-display text-white font-bold">GreenEdge</span>
+              <span className="font-display text-white font-bold">ShopCraft</span>
             </div>
-            <p className="text-xs sm:text-sm text-green-200">
-              Certified landscapers delivering beautiful, reliable service for homes and businesses.
+            <p className="text-xs sm:text-sm text-slate-400">
+              Premium lifestyle and apparel, curated for people who care about quality.
             </p>
           </div>
 
-          {/* Services */}
+          {/* Shop */}
           <div>
-            <h4 className="font-semibold text-white text-sm mb-3 sm:mb-4">Services</h4>
+            <h4 className="font-semibold text-white text-sm mb-3 sm:mb-4">Shop</h4>
             <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
-              <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
-              <li><Link href="/why-us" className="hover:text-white transition-colors">Why Us</Link></li>
-              <li><Link href="/services" className="hover:text-white transition-colors">Services</Link></li>
-              <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+              <li><Link href="/shop" className="hover:text-white transition-colors">All Products</Link></li>
+              <li><Link href="/collections" className="hover:text-white transition-colors">Collections</Link></li>
+              <li><Link href="/shop" className="hover:text-white transition-colors">New Arrivals</Link></li>
+              <li><Link href="/shop" className="hover:text-white transition-colors">Sale</Link></li>
             </ul>
           </div>
 
@@ -56,25 +56,22 @@ export function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-green-700 pt-8 sm:pt-12">
+        <div className="border-t border-slate-800 pt-8 sm:pt-12">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-8">
-            {/* Copyright */}
-            <p className="text-xs sm:text-sm text-green-300 text-center sm:text-left">
-              © {currentYear} GreenEdge Landscaping. All rights reserved.
+            <p className="text-xs sm:text-sm text-slate-500 text-center sm:text-left">
+              © {currentYear} ShopCraft. All rights reserved.
             </p>
-
-            {/* Social Links */}
             <div className="flex items-center gap-4 sm:gap-6">
-              <a href="#" className="text-green-300 hover:text-white transition-colors p-2" aria-label="Twitter">
+              <a href="#" className="text-slate-500 hover:text-white transition-colors p-2" aria-label="Twitter">
                 <Twitter className="w-4 h-4" />
               </a>
-              <a href="#" className="text-green-300 hover:text-white transition-colors p-2" aria-label="GitHub">
+              <a href="#" className="text-slate-500 hover:text-white transition-colors p-2" aria-label="GitHub">
                 <Github className="w-4 h-4" />
               </a>
-              <a href="#" className="text-green-300 hover:text-white transition-colors p-2" aria-label="LinkedIn">
+              <a href="#" className="text-slate-500 hover:text-white transition-colors p-2" aria-label="LinkedIn">
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="#" className="text-green-300 hover:text-white transition-colors p-2" aria-label="Email">
+              <a href="#" className="text-slate-500 hover:text-white transition-colors p-2" aria-label="Email">
                 <Mail className="w-4 h-4" />
               </a>
             </div>

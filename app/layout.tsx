@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'GreenEdge Landscaping - Trusted Residential & Commercial Landscapers',
-  description: 'Professional landscapers providing beautiful, reliable lawn and garden services for homes and businesses.',
+  title: 'ShopCraft - Premium Lifestyle & Apparel',
+  description: 'Shop the latest in lifestyle, apparel, and accessories. Free shipping on orders over $75.',
   icons: {
-    icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🌿</text></svg>',
+    icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🛍️</text></svg>',
   },
 }
 

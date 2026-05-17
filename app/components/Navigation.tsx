@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ShoppingCart } from 'lucide-react'
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -16,10 +16,10 @@ export function Navigation() {
           <div className="flex-shrink-0 flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2">
               <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center text-white font-bold text-lg">
-                🌿
+                🛍️
               </div>
               <span className="hidden sm:inline font-display text-xl font-bold text-slate-900">
-                GreenEdge
+                ShopCraft
               </span>
             </Link>
           </div>
@@ -29,20 +29,14 @@ export function Navigation() {
             <Link href="/" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
               Home
             </Link>
+            <Link href="/shop" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+              Shop
+            </Link>
+            <Link href="/collections" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
+              Collections
+            </Link>
             <Link href="/about" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
               About
-            </Link>
-            <Link href="/services" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
-              Services
-            </Link>
-            <Link href="/why-us" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
-              Why Us
-            </Link>
-            <Link href="/our-work" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
-              Our Work
-            </Link>
-            <Link href="/pricing" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
-              Pricing
             </Link>
             <Link href="/contact" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
               Contact
@@ -51,11 +45,12 @@ export function Navigation() {
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <Link href="/contact" className="px-4 py-2 text-sm text-slate-700 hover:text-slate-900 font-medium transition-colors">
-              Request a Quote
+            <Link href="/shop" className="px-4 py-2 text-sm text-slate-700 hover:text-slate-900 font-medium transition-colors">
+              Browse All
             </Link>
-            <Link href="/contact" className="px-4 py-2.5 text-sm bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors font-medium">
-              Book Service
+            <Link href="/contact" className="flex items-center gap-2 px-4 py-2.5 text-sm bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors font-medium">
+              <ShoppingCart className="w-4 h-4" />
+              Shop Now
             </Link>
           </div>
 
@@ -83,30 +78,25 @@ export function Navigation() {
               <Link href="/" onClick={closeNav} className="block px-4 py-3 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors min-h-[44px]">
                 Home
               </Link>
+              <Link href="/shop" onClick={closeNav} className="block px-4 py-3 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors min-h-[44px]">
+                Shop
+              </Link>
+              <Link href="/collections" onClick={closeNav} className="block px-4 py-3 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors min-h-[44px]">
+                Collections
+              </Link>
               <Link href="/about" onClick={closeNav} className="block px-4 py-3 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors min-h-[44px]">
                 About
-              </Link>
-              <Link href="/services" onClick={closeNav} className="block px-4 py-3 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors min-h-[44px]">
-                Services
-              </Link>
-              <Link href="/why-us" onClick={closeNav} className="block px-4 py-3 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors min-h-[44px]">
-                Why Us
-              </Link>
-              <Link href="/our-work" onClick={closeNav} className="block px-4 py-3 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors min-h-[44px]">
-                Our Work
-              </Link>
-              <Link href="/pricing" onClick={closeNav} className="block px-4 py-3 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors min-h-[44px]">
-                Pricing
               </Link>
               <Link href="/contact" onClick={closeNav} className="block px-4 py-3 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors min-h-[44px]">
                 Contact
               </Link>
               <div className="flex flex-col gap-2 pt-2 border-t border-slate-200">
-                <Link href="/contact" onClick={closeNav} className="w-full px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 rounded transition-colors font-medium min-h-[44px]">
-                  Request a Quote
+                <Link href="/shop" onClick={closeNav} className="w-full px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 rounded transition-colors font-medium min-h-[44px]">
+                  Browse All Products
                 </Link>
-                <Link href="/contact" onClick={closeNav} className="w-full px-4 py-3 text-sm bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors font-medium min-h-[44px]">
-                  Get Started
+                <Link href="/shop" onClick={closeNav} className="w-full px-4 py-3 text-sm bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors font-medium min-h-[44px] flex items-center gap-2 justify-center">
+                  <ShoppingCart className="w-4 h-4" />
+                  Shop Now
                 </Link>
               </div>
             </div>

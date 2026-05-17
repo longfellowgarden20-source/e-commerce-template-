@@ -8,23 +8,23 @@ export default function ContactPage() {
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-start">
           <div>
-            <p className="text-sm uppercase tracking-[0.28em] text-accent font-semibold mb-4">Contact GreenEdge</p>
+            <p className="text-sm uppercase tracking-[0.28em] text-accent font-semibold mb-4">Contact ShopCraft</p>
             <h1 className="text-4xl sm:text-5xl font-display font-bold text-slate-950 mb-6">
-              Ready for a beautiful yard? Get a free quote today
+              We are here to help
             </h1>
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-              Call or message us for lawn care, garden design, clean-ups, or ongoing maintenance. Our certified landscapers will respond quickly.
+              Questions about an order, a return, or a product? Reach out and our support team will get back to you within one business day.
             </p>
 
-            <div className="mt-8 rounded-2xl border-2 border-green-100 bg-green-50 p-6">
-              <p className="text-base font-semibold text-slate-900">Prefer to call? We're here to help.</p>
+            <div className="mt-8 rounded-2xl border-2 border-slate-100 bg-slate-50 p-6">
+              <p className="text-base font-semibold text-slate-900">Prefer to reach us directly?</p>
               <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                Call us directly at <a href="tel:+15551234567" className="text-accent font-medium hover:underline">(555) 123-4567</a> or email <a href="mailto:hello@example.com" className="text-accent font-medium hover:underline">hello@example.com</a>. If we don't pick up, please fill out the form and we'll respond as soon as possible.
+                Email us at <a href="mailto:hello@example.com" className="text-accent font-medium hover:underline">hello@shopcraft.com</a> or call <a href="tel:+15551234567" className="text-accent font-medium hover:underline">(555) 123-4567</a>. We respond to all inquiries within one business day.
               </p>
             </div>
           </div>
 
-          <div className="rounded-3xl border-2 border-green-100 bg-green-50 p-8 shadow-sm">
+          <div className="rounded-3xl border-2 border-slate-100 bg-slate-50 p-8 shadow-sm">
             <form className="space-y-6">
               <label className="block">
                 <span className="text-sm font-medium text-slate-800">Name</span>
@@ -57,7 +57,7 @@ export default function ContactPage() {
                 <span className="text-sm font-medium text-slate-800">Message</span>
                 <textarea
                   rows={6}
-                  placeholder="Describe your landscaping project or service needed"
+                  placeholder="Order number, product question, or anything else we can help with"
                   required
                   className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
                 />
