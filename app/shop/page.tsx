@@ -76,7 +76,7 @@ export default function ShopPage() {
                     {product.badge}
                   </span>
                 )}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 pointer-events-none" />
                 <button
                   onClick={() => handleAddToCart(product)}
                   className="absolute bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap px-5 py-2.5 bg-white text-accent text-sm font-semibold rounded-full opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:bg-accent hover:text-white shadow-lg flex items-center gap-2"
