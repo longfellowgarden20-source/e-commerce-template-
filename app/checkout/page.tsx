@@ -109,46 +109,60 @@ function ShippingForm({ onNext, onBack }: { onNext: (info: ShippingInfo) => void
     if (validate()) onNext(form)
   }
 
-  const inputClass = (field: keyof ShippingInfo) =>
+  const ic = (field: keyof ShippingInfo) =>
     `w-full px-4 py-2.5 text-sm border rounded-lg focus:outline-none focus:ring-2 transition-colors placeholder:text-slate-400 ${
       errors[field]
         ? 'border-red-400 focus:ring-red-200 focus:border-red-400'
         : 'border-slate-200 focus:ring-accent/40 focus:border-accent'
     }`
 
-  const Field = ({ label, field, placeholder, type = 'text' }: { label: string; field: keyof ShippingInfo; placeholder: string; type?: string }) => (
-    <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-medium text-slate-600">{label}</label>
-      <input
-        type={type}
-        value={form[field]}
-        onChange={set(field)}
-        placeholder={placeholder}
-        className={inputClass(field)}
-      />
-      {errors[field] && <p className="text-xs text-red-500">{errors[field]}</p>}
-    </div>
-  )
-
   return (
     <form onSubmit={handleSubmit} noValidate>
       <h2 className="text-xl font-display font-bold text-slate-900 mb-6">Shipping information</h2>
       <div className="flex flex-col gap-4">
         <div className="grid grid-cols-2 gap-4">
-          <Field label="First name" field="firstName" placeholder="Jane" />
-          <Field label="Last name" field="lastName" placeholder="Doe" />
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-medium text-slate-600">First name</label>
+            <input value={form.firstName} onChange={set('firstName')} placeholder="Jane" className={ic('firstName')} />
+            {errors.firstName && <p className="text-xs text-red-500">{errors.firstName}</p>}
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-medium text-slate-600">Last name</label>
+            <input value={form.lastName} onChange={set('lastName')} placeholder="Doe" className={ic('lastName')} />
+            {errors.lastName && <p className="text-xs text-red-500">{errors.lastName}</p>}
+          </div>
         </div>
-        <Field label="Email" field="email" placeholder="jane@example.com" type="email" />
-        <Field label="Address" field="address" placeholder="123 Main St" />
-        <div className="grid grid-cols-2 gap-4">
-          <Field label="City" field="city" placeholder="New York" />
-          <Field label="State / Province" field="state" placeholder="NY" />
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-medium text-slate-600">Email</label>
+          <input type="email" value={form.email} onChange={set('email')} placeholder="jane@example.com" className={ic('email')} />
+          {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-medium text-slate-600">Address</label>
+          <input value={form.address} onChange={set('address')} placeholder="123 Main St" className={ic('address')} />
+          {errors.address && <p className="text-xs text-red-500">{errors.address}</p>}
         </div>
         <div className="grid grid-cols-2 gap-4">
-          <Field label="ZIP / Postal code" field="zip" placeholder="10001" />
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-medium text-slate-600">City</label>
+            <input value={form.city} onChange={set('city')} placeholder="New York" className={ic('city')} />
+            {errors.city && <p className="text-xs text-red-500">{errors.city}</p>}
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-medium text-slate-600">State / Province</label>
+            <input value={form.state} onChange={set('state')} placeholder="NY" className={ic('state')} />
+            {errors.state && <p className="text-xs text-red-500">{errors.state}</p>}
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-medium text-slate-600">ZIP / Postal code</label>
+            <input value={form.zip} onChange={set('zip')} placeholder="10001" className={ic('zip')} />
+            {errors.zip && <p className="text-xs text-red-500">{errors.zip}</p>}
+          </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-medium text-slate-600">Country</label>
-            <select value={form.country} onChange={set('country')} className={inputClass('country')}>
+            <select value={form.country} onChange={set('country')} className={ic('country')}>
               <option value="US">United States</option>
               <option value="CA">Canada</option>
               <option value="GB">United Kingdom</option>
