@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Menu, X, ShoppingCart } from 'lucide-react'
+import { Menu, X, ShoppingCart, User } from 'lucide-react'
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -45,8 +45,9 @@ export function Navigation() {
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <Link href="/shop" className="px-4 py-2 text-sm text-slate-700 hover:text-slate-900 font-medium transition-colors">
-              Browse All
+            <Link href="/sign-in" className="flex items-center gap-1.5 px-4 py-2 text-sm text-slate-700 hover:text-slate-900 font-medium transition-colors border border-slate-200 rounded-lg hover:bg-slate-50">
+              <User className="w-4 h-4" />
+              Sign In
             </Link>
             <Link href="/contact" className="flex items-center gap-2 px-4 py-2.5 text-sm bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors font-medium">
               <ShoppingCart className="w-4 h-4" />
@@ -91,8 +92,9 @@ export function Navigation() {
                 Contact
               </Link>
               <div className="flex flex-col gap-2 pt-2 border-t border-slate-200">
-                <Link href="/shop" onClick={closeNav} className="w-full px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 rounded transition-colors font-medium min-h-[44px]">
-                  Browse All Products
+                <Link href="/sign-in" onClick={closeNav} className="w-full px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 rounded-lg border border-slate-200 transition-colors font-medium min-h-[44px] flex items-center gap-2 justify-center">
+                  <User className="w-4 h-4" />
+                  Sign In
                 </Link>
                 <Link href="/shop" onClick={closeNav} className="w-full px-4 py-3 text-sm bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors font-medium min-h-[44px] flex items-center gap-2 justify-center">
                   <ShoppingCart className="w-4 h-4" />
