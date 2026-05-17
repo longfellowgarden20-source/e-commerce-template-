@@ -82,57 +82,73 @@ function CartReview({ onNext }: { onNext: () => void }) {
 
 function ShippingForm({ onNext, onBack }: { onNext: (info: ShippingInfo) => void; onBack: () => void }) {
   const [form, setForm] = useState<ShippingInfo>({ firstName: '', lastName: '', email: '', address: '', city: '', state: '', zip: '', country: 'US' })
+  const [errors, setErrors] = useState<Partial<ShippingInfo>>({})
 
-  const set = (field: keyof ShippingInfo) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+  const set = (field: keyof ShippingInfo) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm((f) => ({ ...f, [field]: e.target.value }))
+    setErrors((err) => ({ ...err, [field]: '' }))
+  }
+
+  const validate = (): boolean => {
+    const e: Partial<ShippingInfo> = {}
+    if (!form.firstName.trim()) e.firstName = 'First name is required'
+    if (!form.lastName.trim()) e.lastName = 'Last name is required'
+    if (!form.email.trim()) e.email = 'Email is required'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Enter a valid email address'
+    if (!form.address.trim()) e.address = 'Address is required'
+    if (!form.city.trim()) e.city = 'City is required'
+    if (!form.state.trim()) e.state = 'State is required'
+    if (!form.zip.trim()) e.zip = 'ZIP code is required'
+    else if (!/^\d{4,10}$/.test(form.zip.replace(/\s/g, ''))) e.zip = 'Enter a valid ZIP / postal code'
+    setErrors(e)
+    return Object.keys(e).length === 0
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    onNext(form)
+    if (validate()) onNext(form)
   }
 
-  const inputClass = "w-full px-4 py-2.5 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition-colors placeholder:text-slate-400"
+  const inputClass = (field: keyof ShippingInfo) =>
+    `w-full px-4 py-2.5 text-sm border rounded-lg focus:outline-none focus:ring-2 transition-colors placeholder:text-slate-400 ${
+      errors[field]
+        ? 'border-red-400 focus:ring-red-200 focus:border-red-400'
+        : 'border-slate-200 focus:ring-accent/40 focus:border-accent'
+    }`
+
+  const Field = ({ label, field, placeholder, type = 'text' }: { label: string; field: keyof ShippingInfo; placeholder: string; type?: string }) => (
+    <div className="flex flex-col gap-1.5">
+      <label className="text-xs font-medium text-slate-600">{label}</label>
+      <input
+        type={type}
+        value={form[field]}
+        onChange={set(field)}
+        placeholder={placeholder}
+        className={inputClass(field)}
+      />
+      {errors[field] && <p className="text-xs text-red-500">{errors[field]}</p>}
+    </div>
+  )
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} noValidate>
       <h2 className="text-xl font-display font-bold text-slate-900 mb-6">Shipping information</h2>
       <div className="flex flex-col gap-4">
         <div className="grid grid-cols-2 gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-slate-600">First name</label>
-            <input required value={form.firstName} onChange={set('firstName')} placeholder="Jane" className={inputClass} />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-slate-600">Last name</label>
-            <input required value={form.lastName} onChange={set('lastName')} placeholder="Doe" className={inputClass} />
-          </div>
+          <Field label="First name" field="firstName" placeholder="Jane" />
+          <Field label="Last name" field="lastName" placeholder="Doe" />
         </div>
-        <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-slate-600">Email</label>
-          <input required type="email" value={form.email} onChange={set('email')} placeholder="jane@example.com" className={inputClass} />
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-medium text-slate-600">Address</label>
-          <input required value={form.address} onChange={set('address')} placeholder="123 Main St" className={inputClass} />
+        <Field label="Email" field="email" placeholder="jane@example.com" type="email" />
+        <Field label="Address" field="address" placeholder="123 Main St" />
+        <div className="grid grid-cols-2 gap-4">
+          <Field label="City" field="city" placeholder="New York" />
+          <Field label="State / Province" field="state" placeholder="NY" />
         </div>
         <div className="grid grid-cols-2 gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-slate-600">City</label>
-            <input required value={form.city} onChange={set('city')} placeholder="New York" className={inputClass} />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-slate-600">State</label>
-            <input required value={form.state} onChange={set('state')} placeholder="NY" className={inputClass} />
-          </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-medium text-slate-600">ZIP code</label>
-            <input required value={form.zip} onChange={set('zip')} placeholder="10001" className={inputClass} />
-          </div>
+          <Field label="ZIP / Postal code" field="zip" placeholder="10001" />
           <div className="flex flex-col gap-1.5">
             <label className="text-xs font-medium text-slate-600">Country</label>
-            <select value={form.country} onChange={set('country')} className={inputClass}>
+            <select value={form.country} onChange={set('country')} className={inputClass('country')}>
               <option value="US">United States</option>
               <option value="CA">Canada</option>
               <option value="GB">United Kingdom</option>
