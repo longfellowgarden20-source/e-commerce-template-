@@ -1,15 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Navigation } from '../components/Navigation'
 import { Footer } from '../components/Footer'
 import { useCart } from '../context/CartContext'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
-import { CheckCircle, ChevronRight } from 'lucide-react'
+import { CheckCircle, ChevronRight, CreditCard, Lock } from 'lucide-react'
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+const stripePromise = stripePublishableKey ? loadStripe(stripePublishableKey) : null
 
 type ShippingInfo = {
   firstName: string
@@ -169,7 +169,7 @@ function ShippingForm({ onNext, onBack }: { onNext: (info: ShippingInfo) => void
   )
 }
 
-function PaymentForm({ clientSecret, onBack, onSuccess }: { clientSecret: string; onBack: () => void; onSuccess: () => void }) {
+function StripePaymentForm({ onBack, onSuccess }: { onBack: () => void; onSuccess: () => void }) {
   const stripe = useStripe()
   const elements = useElements()
   const [loading, setLoading] = useState(false)
@@ -202,7 +202,11 @@ function PaymentForm({ clientSecret, onBack, onSuccess }: { clientSecret: string
         <PaymentElement />
       </div>
       {error && <p className="text-sm text-red-500 mb-4">{error}</p>}
-      <div className="flex gap-3 mt-6">
+      <div className="flex items-center gap-2 text-xs text-slate-400 mb-4">
+        <Lock className="w-3.5 h-3.5" />
+        <span>Secured by Stripe. Your payment info is never stored.</span>
+      </div>
+      <div className="flex gap-3">
         <button type="button" onClick={onBack} className="flex-1 py-3 border border-slate-200 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors">
           Back
         </button>
@@ -215,6 +219,22 @@ function PaymentForm({ clientSecret, onBack, onSuccess }: { clientSecret: string
         </button>
       </div>
     </form>
+  )
+}
+
+function PaymentPlaceholder({ onBack }: { onBack: () => void }) {
+  return (
+    <div>
+      <h2 className="text-xl font-display font-bold text-slate-900 mb-6">Payment</h2>
+      <div className="p-6 border border-dashed border-slate-300 rounded-xl bg-slate-50 text-center mb-4">
+        <CreditCard className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+        <p className="text-sm font-medium text-slate-600 mb-1">Stripe not configured</p>
+        <p className="text-xs text-slate-400">Add your <code className="bg-slate-200 px-1 rounded">STRIPE_SECRET_KEY</code> and <code className="bg-slate-200 px-1 rounded">NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code> environment variables to enable payments.</p>
+      </div>
+      <button type="button" onClick={onBack} className="w-full py-3 border border-slate-200 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors">
+        Back
+      </button>
+    </div>
   )
 }
 
@@ -249,13 +269,19 @@ export default function CheckoutPage() {
 
   const handleShippingNext = async (info: ShippingInfo) => {
     setShipping(info)
-    const res = await fetch('/api/create-payment-intent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: Math.round(total * 100) }),
-    })
-    const data = await res.json()
-    setClientSecret(data.clientSecret)
+    if (stripePromise) {
+      try {
+        const res = await fetch('/api/create-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: Math.round(total * 100) }),
+        })
+        const data = await res.json()
+        if (data.clientSecret) setClientSecret(data.clientSecret)
+      } catch {
+        // proceed to step 2 which will show the placeholder
+      }
+    }
     setStep(2)
   }
 
@@ -273,10 +299,14 @@ export default function CheckoutPage() {
 
         {step === 0 && <CartReview onNext={() => setStep(1)} />}
         {step === 1 && <ShippingForm onNext={handleShippingNext} onBack={() => setStep(0)} />}
-        {step === 2 && clientSecret && (
-          <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'stripe' } }}>
-            <PaymentForm clientSecret={clientSecret} onBack={() => setStep(1)} onSuccess={handleSuccess} />
-          </Elements>
+        {step === 2 && (
+          stripePromise && clientSecret
+            ? (
+              <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'stripe' } }}>
+                <StripePaymentForm onBack={() => setStep(1)} onSuccess={handleSuccess} />
+              </Elements>
+            )
+            : <PaymentPlaceholder onBack={() => setStep(1)} />
         )}
         {step === 3 && <Confirmation shipping={shipping} />}
       </section>
